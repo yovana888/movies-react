@@ -1,4 +1,5 @@
-import { useState, createContext, useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, createContext, useContext, useEffect } from "react";
 
 import { AuthContext } from "./AuthContext";
 
@@ -7,10 +8,15 @@ export const MovieFavoriteContext = createContext();
 export const MovieFavoriteProvider = ({ children }) => {
 	const { user } = useContext(AuthContext);
 
-	const favorites =
-		JSON.parse(localStorage.getItem("movieapp.favorites")) ?? [];
-
-	const [favoriteMovies, setFavoriteMovies] = useState(favorites);
+	const [favoriteMovies, setFavoriteMovies] = useState([]);
+	
+	useEffect(() => {
+		if(user.id){
+			const favorites = JSON.parse(localStorage.getItem("movieapp.favorites"+user.id)) ?? [];
+			setFavoriteMovies( favorites)
+		}
+	  }, [user])
+	  
 
 	const addToFavorite = (movie) => {
 		const favorite = {
@@ -38,7 +44,7 @@ export const MovieFavoriteProvider = ({ children }) => {
 	};
 
 	const saveInLocalStorage = (favorites) => {
-		localStorage.setItem("movieapp.favorites", JSON.stringify(favorites));
+		localStorage.setItem("movieapp.favorites"+user.id, JSON.stringify(favorites));
 	};
 
 	// vamos hacer una funcion que retorne 1 o 0

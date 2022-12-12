@@ -14,7 +14,7 @@ const DrawerCart = () => {
   const getTotal = () => {
     let total = 0;
 
-    const prices = items.map((item) => item.movie.Price);
+    const prices = items.map((item) => item.movie.Price * item.quantity);
 
     prices.forEach((price) => (total += Number(price)));
 

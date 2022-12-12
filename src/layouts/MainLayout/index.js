@@ -16,6 +16,7 @@ import {
   ListItemIcon,
   ListItemText,
   Stack,
+  Avatar
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiDrawer from "@mui/material/Drawer";
@@ -114,7 +115,7 @@ const DrawerButton = ({ text, icon, action }) => {
 const MainLayout = () => {
   const history = useNavigate();
   const { user, logout, isAuth } = useContext(AuthContext);
-
+  console.log(user)
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -148,9 +149,12 @@ const MainLayout = () => {
             direction="row"
             justifyContent="space-between"
           >
-            <Typography variant="h6" noWrap component="div">
-              {user.name}
-            </Typography>
+            <Stack  direction="row" spacing={2}>
+              <Avatar src={user.photo}></Avatar>
+              <Typography variant="h6" noWrap component="div">
+                {user.name}
+              </Typography>
+            </Stack>
             <DrawerCart />
           </Stack>
         </Toolbar>

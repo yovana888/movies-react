@@ -1,6 +1,12 @@
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
-
+import  React, {useContext} from 'react'
+import { Box, Card, CardContent, Stack, Typography, Button } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ShoppingCartContext } from '../../context/ShoppingCartContext'
 const CartItem = ({ item }) => {
+  const { removeInCart } = useContext(ShoppingCartContext);
+  const deleteItem = (idmovie) =>{
+    removeInCart(idmovie);
+  }
   return (
     <Box mt={3}>
       <Card>
@@ -25,6 +31,7 @@ const CartItem = ({ item }) => {
               <Typography variant="h6">{item.movie.Title}</Typography>
               <Typography variant="subtitle1">$ {item.movie.Price}</Typography>
               <Typography variant="subtitle1">{item.quantity}</Typography>
+              <Button onClick={()=>{deleteItem(item.movie.imdbID)}}><DeleteIcon/></Button>
             </Stack>
           </Stack>
         </CardContent>
